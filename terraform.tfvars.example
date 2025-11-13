@@ -1,0 +1,65 @@
+project_name = "gcp-terraform-test-env"
+environment = "test"
+
+# GCP Project ID
+project_id = "your-gcp-project-id"
+
+# VPC Configuration
+vpc_name = "${project_name}-${environment}-vpc"
+vpc_cidr = "10.0.0.0/16"
+subnet_cidrs = ["10.0.1.0/24", "10.0.2.0/24"]
+
+# GKE Configuration
+gke_cluster_name = "${project_name}-${environment}-gke"
+gke_region = "us-central1"
+gke_node_count = 3
+gke_machine_type = "e2-medium"
+
+# Cloud SQL Configuration
+cloud_sql_instance_name = "${project_name}-${environment}-sql"
+cloud_sql_region = "us-central1"
+cloud_sql_database_version = "POSTGRES_13"
+cloud_sql_root_password = "your-secure-password"
+
+# OAM Server Configuration
+oam_server_name = "${project_name}-${environment}-oam-server"
+oam_server_machine_type = "e2-medium"
+
+# Storage Configuration
+storage_bucket_name = "${project_name}-${environment}-storage"
+
+# Load Balancer Configuration
+load_balancer_name = "${project_name}-${environment}-lb"
+
+# DNS Configuration
+dns_zone_name = "${project_name}-${environment}-dns"
+dns_records = [
+  {
+    name = "test.${dns_zone_name}"
+    type = "A"
+    ttl = 300
+    rrdatas = ["1.2.3.4"]
+  }
+]
+
+# Cloud Operations Configuration
+cloud_operations_logging_enabled = true
+cloud_operations_monitoring_enabled = true
+
+# IAM Configuration
+iam_roles = [
+  {
+    role = "roles/viewer"
+    members = ["user:your-email@example.com"]
+  },
+  {
+    role = "roles/editor"
+    members = ["serviceAccount:${project_id}@appspot.gserviceaccount.com"]
+  }
+]
+
+# Tags
+tags = {
+  environment = "test"
+  project     = project_name
+}
